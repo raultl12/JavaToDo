@@ -1,0 +1,10 @@
+2
+
+0
+tomar notas
+false
+
+1
+programar
+false
+
