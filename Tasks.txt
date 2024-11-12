@@ -1,10 +1,13 @@
-2
-
+4
 0
-tomar notas
+jugar
 false
-
 1
-programar
+leer
 false
-
+2
+beber agua
+false
+3
+ir al cine
+false

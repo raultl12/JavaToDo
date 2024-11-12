@@ -43,6 +43,7 @@ public class ToDo {
                 case 2:
                     System.out.println("Opcion 2");
                     taskManager.printTasks();
+                    //taskManager.readData();
                     break;
                 case 3:
                     System.out.println("Opcion 3");

@@ -32,7 +32,12 @@ public class Task {
         this.id = id;
         this.description = description;
         this.completed = false;
-        this.insertData();
+    }
+    
+    public Task(int id, String description, boolean completed){
+        this.id = id;
+        this.description = description;
+        this.completed = completed;
     }
 
     public String getDescription() {

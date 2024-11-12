@@ -1,7 +1,10 @@
 
 package todo;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,8 +16,9 @@ public class TaskManager {
     private static int lastTaskId;
     
     public TaskManager(){
-        allTasks = new ArrayList<>();
-        lastTaskId = 0;
+        allTasks = this.readData();
+        //allTasks = new ArrayList<>();
+        //lastTaskId = 0;
     }
     
     public void addTask(Task task){
@@ -39,10 +43,10 @@ public class TaskManager {
     }
     
     public String tasksToString(){
-        String txt = Integer.toString(lastTaskId) + "\n\n";
+        String txt = Integer.toString(TaskManager.lastTaskId) + "\n";
         for(Task t : allTasks){
             txt += t.getId() + "\n" + t.getDescription() + "\n" +
-                    t.isCompleted() + "\n\n";
+                    t.isCompleted() + "\n";
         }
         return txt;
     }
@@ -57,7 +61,44 @@ public class TaskManager {
         }
     }
     
-    public void readData(){
-        // TODO: Read file data and convert to tasks.
+    public ArrayList<Task> readData(){
+        ArrayList<Task> taskArray = new ArrayList<>();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("Tasks.txt"));
+            //Read lines and create individual task
+            String line;
+            int taskId = 0;
+            String taskDescription = "";
+            boolean taskCompleted = false;
+            
+            int lineCounter = 0;
+            
+            TaskManager.lastTaskId = Integer.valueOf(reader.readLine());
+            
+            while((line = reader.readLine()) != null){
+                switch(lineCounter){
+                    case 0:
+                        taskId = Integer.valueOf(line);
+                        break;
+                    case 1:
+                        taskDescription = line;
+                        break;
+                    case 2:
+                        taskCompleted = Boolean.getBoolean(line);
+                        Task newTask = new Task(taskId, taskDescription, taskCompleted);
+                        taskArray.add(newTask);
+                        lineCounter = -1;
+                }
+                lineCounter++;
+                
+
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(TaskManager.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(TaskManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return taskArray;
     }
 }
